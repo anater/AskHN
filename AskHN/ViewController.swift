@@ -23,8 +23,15 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "story", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        return cell
+        if let storyCell = cell as? StoryTableViewCell {
+            storyCell.titleLabel?.text = "Title: \(data[indexPath.row])"
+            storyCell.subtitleLabel?.text = "Subtitle: \(data[indexPath.row])"
+            return storyCell
+        } else {
+            // fallback
+            cell.textLabel?.text = data[indexPath.row]
+            return cell
+        }
     }
 }
 
