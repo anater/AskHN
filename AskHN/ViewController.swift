@@ -15,6 +15,20 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        loadList()
+    }
+    
+    func loadList() {
+        HackerNewsAPI().ask { data, error in
+            self.loadItems(items: data as! Array<Int>)
+        }
+    }
+    
+    func loadItems(items: Array<Int>) {
+     dump(items)
+        // TODO: use DispatchGroup to keep track of when all requested items have been loaded
+        // – need to keep track of a collection of the responses as the complete
+        // – need to execute on all the responses once they are available
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
