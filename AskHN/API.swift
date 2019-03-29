@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class HackerNewsAPI {
     
     let rootURL = "https://hacker-news.firebaseio.com/v0/"
@@ -48,5 +47,33 @@ class HackerNewsAPI {
     
     func item(withID id: Int, completionHandler: @escaping (Any?, Error?) -> Void) {
         request(endpoint: "item/\(id)", completionHandler: completionHandler)
+    }
+    
+    func items(ids: Array<Int>, completionHandler: @escaping (Any?, Error?) -> Void) {
+        let group = DispatchGroup()
+        var responses = [Any]()
+        
+        for id in ids {
+            group.enter()
+            item(withID: id) { (data, error) in
+                if error != nil {
+                    let message = "⚠️ Error with item \(id)"
+                    let error = NSError(domain: message, code: 2)
+                    print(message)
+                    completionHandler(nil, error)
+                }
+                if data != nil {
+                    responses.append(data!)
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print("items have all loaded")
+            if (responses.count > 0 && responses.count == ids.count) {
+                completionHandler(responses, nil)
+            }
+        }
     }
 }
