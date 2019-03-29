@@ -9,26 +9,36 @@
 import UIKit
 
 class ViewController: UITableViewController {
-    
-    let data = ["one", "two", "three"]
+   
+    let api = HackerNewsAPI()
+    var data = [Any]() // TODO: use an actual Story type here...
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         loadList()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 90
     }
     
     func loadList() {
-        HackerNewsAPI().ask { data, error in
+        api.ask { data, error in
             self.loadItems(items: data as! Array<Int>)
         }
     }
     
     func loadItems(items: Array<Int>) {
-     dump(items)
-        // TODO: use DispatchGroup to keep track of when all requested items have been loaded
-        // – need to keep track of a collection of the responses as the complete
-        // – need to execute on all the responses once they are available
+        api.items(ids: items) { (itemResponses, error) in
+            if error != nil {
+                print(error)
+                return
+            }
+            // do something wtih responses
+            print("responses")
+            self.data = itemResponses as! [Any]
+            self.tableView.reloadData()
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,12 +48,17 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "story", for: indexPath)
         if let storyCell = cell as? StoryTableViewCell {
-            storyCell.titleLabel?.text = "Title: \(data[indexPath.row])"
-            storyCell.subtitleLabel?.text = "Subtitle: \(data[indexPath.row])"
+            let storyData = data[indexPath.row] as AnyObject
+            let title = storyData["title"] as! String
+            let points = storyData["score"] as! Int
+            let comments = storyData["descendants"] as! Int
+            let time = storyData["time"] as! Int
+            // points | comments | timestamp
+            storyCell.titleLabel?.text = title
+            storyCell.subtitleLabel?.text = "\(points) points | \(comments) comments | \(time)"
             return storyCell
         } else {
             // fallback
-            cell.textLabel?.text = data[indexPath.row]
             return cell
         }
     }
