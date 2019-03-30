@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UITableViewController {
    
     let api = HackerNewsAPI()
-    var data = [Any]() // TODO: use an actual Story type here...
+    var data = [HNItem]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,21 +22,28 @@ class ViewController: UITableViewController {
     }
     
     func loadList() {
-        api.ask { data, error in
-            self.loadItems(items: data as! Array<Int>)
+        api.getAskStories { items, error in
+            if let items = items {
+                self.loadItems(items: items)
+            } else if error != nil {
+                print("Error loading list")
+            }
         }
     }
     
-    func loadItems(items: Array<Int>) {
-        api.items(ids: items) { (itemResponses, error) in
-            if error != nil {
+    func loadItems(items: [Int]) {
+        api.getItems(for: items) { (itemResponses, error) in
+            guard error == nil else {
                 print(error!)
                 return
             }
-            // do something wtih responses
-            print("responses")
-            self.data = itemResponses as! [Any]
-            self.tableView.reloadData()
+            // if we got items...
+            if let itemResponses = itemResponses,
+                itemResponses.count > 0 {
+                // do something wtih responses
+                self.data = itemResponses
+                self.tableView.reloadData()
+            }
         }
     }
 
@@ -46,25 +53,23 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "story", for: indexPath)
-        if let storyCell = cell as? StoryTableViewCell {
-            let storyData = data[indexPath.row] as AnyObject
-            let title = storyData["title"] as! String
-            let points = storyData["score"] as! Int
-            let comments = storyData["descendants"] as! Int
-            let time = storyData["time"] as! Int
-            let date = Date(timeIntervalSince1970: TimeInterval(time))
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = NSLocale.current
-            dateFormatter.dateFormat = "MMM d 'at' h:mm a" //Specify your format that you want
-            let timestamp = dateFormatter.string(from: date)
-            // points | comments | timestamp
-            storyCell.titleLabel?.text = title
-            storyCell.subtitleLabel?.text = "\(points) points | \(comments) comments | \(timestamp)"
-            return storyCell
-        } else {
-            // fallback
-            return cell
-        }
+        guard let storyCell = cell as? StoryTableViewCell else { return cell }
+
+        let storyData = data[indexPath.row]
+       
+        // format date
+        let date = Date(timeIntervalSince1970: TimeInterval(storyData.time))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.locale = NSLocale.autoupdatingCurrent
+        dateFormatter.dateFormat = "MMM d 'at' h:mm a" //Specify your format that you want
+        let timestamp = dateFormatter.string(from: date)
+        
+        // set up label text
+        storyCell.titleLabel?.text = storyData.title
+        storyCell.subtitleLabel?.text = "\(storyData.score) points | \(storyData.descendants) comments | \(timestamp)"
+        
+        return storyCell
     }
 }
 
