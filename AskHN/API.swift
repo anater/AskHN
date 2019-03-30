@@ -77,3 +77,23 @@ class HackerNewsAPI {
         }
     }
 }
+
+struct HNItem: Codable {
+    var by: String
+    var descendants: Int
+    var id: Int
+    var kids: Set<Int>?
+    var score: Int
+    var text: String // TODO: use attributeable string to convert from HTML
+    var time: Double // TODO: convert to date object from UNIX time
+    var title: String // TODO: trim off Ask HN prefixes
+    var type: ItemType
+    var parent: Int?
+    var url: URL?
+
+    enum ItemType: String, Codable {
+        case story
+        case comment
+        case ask
+    }
+}
