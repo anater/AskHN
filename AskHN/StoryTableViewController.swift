@@ -38,11 +38,22 @@ class StoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "story") as? StoryTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "storyDetail") as? StoryDetailTableViewCell {
                 cell.titleLabel.text = story?.title
                 cell.subtitleLabel.text = story?.by
+                // if the story has text, render it as a mutable attributed string so the HTML shows up nicely
+                if let bodyText = story?.text {
+                    print(bodyText)
+                    let data = Data(bodyText.utf8)
+                    if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSMutableAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil) {
+                        // NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)
+                        attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: attributedString.length))
+                        cell.bodyLabel.attributedText = attributedString
+                    }
+                }
                 return cell
             } else {
+                // render like a comment...
                 print("could not find story cell for index path")
             }
         }

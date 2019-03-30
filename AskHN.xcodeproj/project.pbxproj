@@ -17,6 +17,7 @@
 		DDC7E900224BF3BB00356CCE /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */; };
 		DDC7E902224C594D00356CCE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E901224C594D00356CCE /* API.swift */; };
 		DDCAA540224FF74700313B23 /* StoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */; };
+		DDCAA542225012C000313B23 /* StoryDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAA541225012C000313B23 /* StoryDetailTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		DDC7E901224C594D00356CCE /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewController.swift; sourceTree = "<group>"; };
+		DDCAA541225012C000313B23 /* StoryDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDetailTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				DDC7E8D3224BD0BC00356CCE /* ViewController.swift */,
 				DDC7E901224C594D00356CCE /* API.swift */,
 				DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */,
+				DDCAA541225012C000313B23 /* StoryDetailTableViewCell.swift */,
 				DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */,
 				DDC7E8D5224BD0BC00356CCE /* Main.storyboard */,
 				DDC7E8D8224BD0BD00356CCE /* Assets.xcassets */,
@@ -269,6 +272,7 @@
 				DDC7E8D4224BD0BC00356CCE /* ViewController.swift in Sources */,
 				DDC7E8D2224BD0BC00356CCE /* AppDelegate.swift in Sources */,
 				DDC7E902224C594D00356CCE /* API.swift in Sources */,
+				DDCAA542225012C000313B23 /* StoryDetailTableViewCell.swift in Sources */,
 				DDC7E900224BF3BB00356CCE /* StoryTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
