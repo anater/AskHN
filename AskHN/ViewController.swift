@@ -19,7 +19,6 @@ class ViewController: UITableViewController {
         loadList()
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 90
     }
     
     func loadList() {
@@ -31,7 +30,7 @@ class ViewController: UITableViewController {
     func loadItems(items: Array<Int>) {
         api.items(ids: items) { (itemResponses, error) in
             if error != nil {
-                print(error)
+                print(error!)
                 return
             }
             // do something wtih responses
@@ -53,9 +52,14 @@ class ViewController: UITableViewController {
             let points = storyData["score"] as! Int
             let comments = storyData["descendants"] as! Int
             let time = storyData["time"] as! Int
+            let date = Date(timeIntervalSince1970: TimeInterval(time))
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "MMM d 'at' h:mm a" //Specify your format that you want
+            let timestamp = dateFormatter.string(from: date)
             // points | comments | timestamp
             storyCell.titleLabel?.text = title
-            storyCell.subtitleLabel?.text = "\(points) points | \(comments) comments | \(time)"
+            storyCell.subtitleLabel?.text = "\(points) points | \(comments) comments | \(timestamp)"
             return storyCell
         } else {
             // fallback
