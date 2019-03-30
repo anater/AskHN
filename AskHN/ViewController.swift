@@ -71,5 +71,17 @@ class ViewController: UITableViewController {
         
         return storyCell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyData = data[indexPath.row]
+//        let vc = StoryTableViewController(story: storyData)
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "storyDetail") as? StoryTableViewController {
+            vc.story = storyData
+            navigationController?.show(vc, sender: nil)
+        } else {
+            print("something went wrong showing story")
+        }
+    }
 }
 

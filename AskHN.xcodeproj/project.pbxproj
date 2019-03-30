@@ -16,6 +16,7 @@
 		DDC7E8F2224BD0BD00356CCE /* AskHNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E8F1224BD0BD00356CCE /* AskHNUITests.swift */; };
 		DDC7E900224BF3BB00356CCE /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */; };
 		DDC7E902224C594D00356CCE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E901224C594D00356CCE /* API.swift */; };
+		DDCAA540224FF74700313B23 /* StoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		DDC7E8F3224BD0BD00356CCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		DDC7E901224C594D00356CCE /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				DDC7E8D3224BD0BC00356CCE /* ViewController.swift */,
 				DDC7E901224C594D00356CCE /* API.swift */,
 				DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */,
+				DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */,
 				DDC7E8D5224BD0BC00356CCE /* Main.storyboard */,
 				DDC7E8D8224BD0BD00356CCE /* Assets.xcassets */,
 				DDC7E8DA224BD0BD00356CCE /* LaunchScreen.storyboard */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDCAA540224FF74700313B23 /* StoryTableViewController.swift in Sources */,
 				DDC7E8D4224BD0BC00356CCE /* ViewController.swift in Sources */,
 				DDC7E8D2224BD0BC00356CCE /* AppDelegate.swift in Sources */,
 				DDC7E902224C594D00356CCE /* API.swift in Sources */,
