@@ -67,7 +67,7 @@ class ViewController: UITableViewController {
         
         // set up label text
         storyCell.titleLabel?.text = storyData.title
-        storyCell.subtitleLabel?.text = "\(storyData.score) points | \(storyData.descendants) comments | \(timestamp)"
+        storyCell.subtitleLabel?.text = "\(storyData.score!) points | \(storyData.descendants!) comments | \(timestamp)"
         
         return storyCell
     }

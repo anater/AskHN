@@ -146,7 +146,6 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="MIz-A4-ck6" firstAttribute="centerY" secondItem="FNZ-DQ-0sM" secondAttribute="centerY" id="4kC-J2-wNc"/>
                                         <constraint firstItem="MIz-A4-ck6" firstAttribute="leading" secondItem="FNZ-DQ-0sM" secondAttribute="leading" constant="20" id="6GS-hl-K8p"/>
                                         <constraint firstItem="MIz-A4-ck6" firstAttribute="top" secondItem="FNZ-DQ-0sM" secondAttribute="top" constant="20" id="CX7-7b-UY3"/>
                                         <constraint firstAttribute="trailing" secondItem="MIz-A4-ck6" secondAttribute="trailing" constant="20" id="GHn-Rj-nqT"/>
@@ -159,6 +158,31 @@
                                     <outlet property="subtitleLabel" destination="ykv-Dh-Ml5" id="Aig-p4-aS0"/>
                                     <outlet property="titleLabel" destination="BMj-h6-6TH" id="eBd-hE-Qoa"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="storyComment" textLabel="lIr-ba-q9A" detailTextLabel="ADB-Nl-wUd" rowHeight="80" style="IBUITableViewCellStyleSubtitle" id="Rir-43-7dg" customClass="StoryDetailTableViewCell" customModule="AskHN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="178" width="414" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rir-43-7dg" id="P77-iT-Nq3">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lIr-ba-q9A">
+                                            <rect key="frame" x="20" y="17" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ADB-Nl-wUd">
+                                            <rect key="frame" x="20" y="40.5" width="59" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                            <color key="textColor" red="0.50980392159999999" green="0.50980392159999999" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>

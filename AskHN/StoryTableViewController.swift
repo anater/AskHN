@@ -10,6 +10,8 @@ import UIKit
 
 class StoryTableViewController: UITableViewController {
     
+    let api = HackerNewsAPI()
+    
     var story: HNItem?
     var comments = [HNItem]()
     
@@ -24,12 +26,33 @@ class StoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationController?.navigationBar.prefersLargeTitles = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+
+        loadComments()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = true
         super.viewDidDisappear(animated)
+    }
+    
+    func loadComments() {
+        guard let items = story?.kids else { return }
+        api.getItems(for: items) { (comments, error) in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+            guard let comments = comments else {
+                print("no comments")
+                return
+            }
+            self.comments = comments
+            self.tableView.reloadData()
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,23 +64,33 @@ class StoryTableViewController: UITableViewController {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "storyDetail") as? StoryDetailTableViewCell {
                 cell.titleLabel.text = story?.title
                 cell.subtitleLabel.text = story?.by
-                // if the story has text, render it as a mutable attributed string so the HTML shows up nicely
-                if let bodyText = story?.text {
-                    print(bodyText)
-                    let data = Data(bodyText.utf8)
-                    if let attributedString = try? NSMutableAttributedString(data: data, options: [.documentType: NSMutableAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil) {
-                        // NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)
-                        attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: attributedString.length))
-                        cell.bodyLabel.attributedText = attributedString
-                    }
-                }
+                cell.bodyLabel.attributedText = getAttributedString(from: Data(story?.text?.utf8 ?? "".utf8))!
                 return cell
-            } else {
-                // render like a comment...
-                print("could not find story cell for index path")
             }
-        }
+        } else if let cell = tableView.dequeueReusableCell(withIdentifier: "storyComment") {
+            
+            let comment = comments[indexPath.row - 1]
+            cell.textLabel?.attributedText = getAttributedString(from: Data(comment.text?.utf8 ?? "".utf8))!
+            cell.detailTextLabel?.text = comment.by
 
-        return tableView.cellForRow(at: indexPath)!
+            return cell
+        }
+        // none of the above? return empty cell
+        return UITableViewCell()
+    }
+    
+    func getAttributedString(from html: Data) -> NSMutableAttributedString? {
+        let options: [NSMutableAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSMutableAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        if let attributedString = try? NSMutableAttributedString(data: html,options: options, documentAttributes: nil) {
+            attributedString.addAttribute(.font,
+                                          value: UIFont.preferredFont(forTextStyle: .body),
+                                          range: NSRange(location: 0, length: attributedString.length))
+            return attributedString
+        } else {
+            return nil
+        }
     }
 }
