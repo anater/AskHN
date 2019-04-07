@@ -29,7 +29,6 @@ class StoryTableViewController: UITableViewController {
 
         navigationController?.navigationBar.prefersLargeTitles = false
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension
 
         loadComments()
     }
@@ -63,15 +62,15 @@ class StoryTableViewController: UITableViewController {
         if indexPath.row == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "storyDetail") as? StoryDetailTableViewCell {
                 cell.titleLabel.text = story?.title
-                cell.subtitleLabel.text = story?.by
+                cell.subtitleLabel.text = story?.by ?? ""
                 cell.bodyLabel.attributedText = getAttributedString(from: Data(story?.text?.utf8 ?? "".utf8))!
                 return cell
             }
-        } else if let cell = tableView.dequeueReusableCell(withIdentifier: "storyComment") {
+        } else if let cell = tableView.dequeueReusableCell(withIdentifier: "storyComment") as? StoryCommentTableViewCell {
             
             let comment = comments[indexPath.row - 1]
-            cell.textLabel?.attributedText = getAttributedString(from: Data(comment.text?.utf8 ?? "".utf8))!
-            cell.detailTextLabel?.text = comment.by
+            cell.textView?.attributedText = getAttributedString(from: Data(comment.text?.utf8 ?? "".utf8))!
+            cell.subtitleLabel?.text = comment.by
 
             return cell
         }

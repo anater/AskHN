@@ -97,7 +97,7 @@ class HackerNewsAPI {
 }
 
 struct HNItem: Codable {
-    var by: String
+    var by: String?
     var descendants: Int?
     var id: Int
     var kids: [Int]?

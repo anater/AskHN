@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DDC584892258254B004A54BA /* StoryCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC584882258254B004A54BA /* StoryCommentTableViewCell.swift */; };
 		DDC7E8D2224BD0BC00356CCE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E8D1224BD0BC00356CCE /* AppDelegate.swift */; };
 		DDC7E8D4224BD0BC00356CCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC7E8D3224BD0BC00356CCE /* ViewController.swift */; };
 		DDC7E8D7224BD0BC00356CCE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDC7E8D5224BD0BC00356CCE /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DDC584882258254B004A54BA /* StoryCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCommentTableViewCell.swift; sourceTree = "<group>"; };
 		DDC7E8CE224BD0BC00356CCE /* AskHN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AskHN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC7E8D1224BD0BC00356CCE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDC7E8D3224BD0BC00356CCE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				DDC7E901224C594D00356CCE /* API.swift */,
 				DDC7E8FF224BF3BB00356CCE /* StoryTableViewCell.swift */,
 				DDCAA541225012C000313B23 /* StoryDetailTableViewCell.swift */,
+				DDC584882258254B004A54BA /* StoryCommentTableViewCell.swift */,
 				DDCAA53F224FF74700313B23 /* StoryTableViewController.swift */,
 				DDC7E8D5224BD0BC00356CCE /* Main.storyboard */,
 				DDC7E8D8224BD0BD00356CCE /* Assets.xcassets */,
@@ -270,6 +273,7 @@
 			files = (
 				DDCAA540224FF74700313B23 /* StoryTableViewController.swift in Sources */,
 				DDC7E8D4224BD0BC00356CCE /* ViewController.swift in Sources */,
+				DDC584892258254B004A54BA /* StoryCommentTableViewCell.swift in Sources */,
 				DDC7E8D2224BD0BC00356CCE /* AppDelegate.swift in Sources */,
 				DDC7E902224C594D00356CCE /* API.swift in Sources */,
 				DDCAA542225012C000313B23 /* StoryDetailTableViewCell.swift in Sources */,
