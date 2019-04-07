@@ -18,6 +18,13 @@ class StoryCommentTableViewCell: UITableViewCell {
         // reset insets
         textView.textContainerInset = UIEdgeInsets.zero
         textView.textContainer.lineFragmentPadding = 0
+        indentationWidth = 20.0
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.contentView.layoutMargins.left = CGFloat(self.indentationLevel) * self.indentationWidth
+        self.contentView.layoutIfNeeded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
