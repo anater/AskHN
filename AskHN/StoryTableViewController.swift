@@ -112,14 +112,16 @@ class StoryTableViewController: UITableViewController {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "storyDetail") as? StoryDetailTableViewCell {
                 cell.titleLabel.text = story?.title
                 cell.subtitleLabel.text = story?.by ?? ""
-                cell.bodyLabel.attributedText = getAttributedString(from: Data(story?.text?.utf8 ?? "".utf8))!
+                cell.bodyLabel.attributedText = getAttributedString(from: Data(story?.text?.utf8 ?? "".utf8))
                 return cell
             }
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "storyComment") as? StoryCommentTableViewCell {
             let data = orderedComments[indexPath.row - 1]
             let comment = commentsById[data.first!.key]
             
-            cell.textView?.attributedText = getAttributedString(from: Data(comment?.text?.utf8 ?? "".utf8))!
+            var text = comment?.text ?? ""
+            
+            cell.textView?.attributedText = getAttributedString(from: Data(text.utf8))
             cell.subtitleLabel?.text = comment?.by
             cell.indentationLevel = data.first!.value
 
@@ -129,18 +131,37 @@ class StoryTableViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    func getAttributedString(from html: Data) -> NSMutableAttributedString? {
+    func getAttributedString(from html: Data) -> NSAttributedString {
         let options: [NSMutableAttributedString.DocumentReadingOptionKey: Any] = [
             .documentType: NSMutableAttributedString.DocumentType.html,
             .characterEncoding: String.Encoding.utf8.rawValue
         ]
-        if let attributedString = try? NSMutableAttributedString(data: html,options: options, documentAttributes: nil) {
+        if let attributedString = try? NSMutableAttributedString(data: html, options: options, documentAttributes: nil) {
             attributedString.addAttribute(.font,
                                           value: UIFont.preferredFont(forTextStyle: .body),
                                           range: NSRange(location: 0, length: attributedString.length))
-            return attributedString
+            return attributedString.trimmedAttributedString(set: .whitespacesAndNewlines)
         } else {
-            return nil
+            return NSAttributedString()
         }
+    }
+}
+
+// From StackOverflow: https://stackoverflow.com/questions/34081197/how-to-trimremove-white-spaces-from-end-of-a-nsattributedstring
+extension NSMutableAttributedString {
+    
+    func trimmedAttributedString(set: CharacterSet) -> NSMutableAttributedString {
+        
+        let invertedSet = set.inverted
+        
+        var range = (string as NSString).rangeOfCharacter(from: invertedSet)
+        let loc = range.length > 0 ? range.location : 0
+        
+        range = (string as NSString).rangeOfCharacter(
+            from: invertedSet, options: .backwards)
+        let len = (range.length > 0 ? NSMaxRange(range) : string.count) - loc
+        
+        let r = self.attributedSubstring(from: NSMakeRange(loc, len))
+        return NSMutableAttributedString(attributedString: r)
     }
 }
