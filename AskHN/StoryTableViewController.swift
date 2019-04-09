@@ -31,8 +31,7 @@ class StoryTableViewController: UITableViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         
         if let items = story?.kids {
             loadComments(for: items)
@@ -128,6 +127,10 @@ class StoryTableViewController: UITableViewController {
         // none of the above? return empty cell
         return UITableViewCell()
     }
+	
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
+	}
     
     func getAttributedString(from html: Data) -> NSMutableAttributedString? {
         let options: [NSMutableAttributedString.DocumentReadingOptionKey: Any] = [
