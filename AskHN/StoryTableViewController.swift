@@ -11,9 +11,9 @@ import UIKit
 class StoryTableViewController: UITableViewController {
     
     let api = HackerNewsAPI()
+    let dispatchGroup = DispatchGroup()
     
     var story: HNItem?
-    var comments = [HNItem]()
     // [ItemId: IndentLevel]
     var orderedComments = [[Int: Int]]()
     var commentsById = [Int: HNItem]()
@@ -35,7 +35,11 @@ class StoryTableViewController: UITableViewController {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         
         if let items = story?.kids {
-            loadComments(for: items, indentationLevel: 1, parentId: nil)
+            loadComments(for: items)
+        }
+        
+        dispatchGroup.notify(queue: .main) { [unowned self] in
+            self.structureCommentsForTableView()
         }
     }
     
@@ -44,9 +48,10 @@ class StoryTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
     }
     
-    func loadComments(for items: [Int], indentationLevel: Int, parentId: Int?) {
+    
+    func loadComments(for items: [Int]) {
         print("Loading items", items)
-        print("Indent", indentationLevel)
+        dispatchGroup.enter()
         // request items, then process data
         api.getItems(for: items) { [unowned self] (comments, error) in
             // exit if we have an error or no comments were returned
@@ -60,28 +65,41 @@ class StoryTableViewController: UITableViewController {
             }
             // if we do have comments, add them to our data structures
             if (comments.count > 0) {
-                var commentsToInsert = [[Int: Int]]()
                 for comment in comments {
                     self.commentsById.updateValue(comment, forKey: comment.id)
-                    commentsToInsert.append([comment.id: indentationLevel])
                     // if we have kids, load those items, incremement indentation level
                     if let kids = comment.kids, kids.count > 0 {
-                        self.loadComments(for: kids, indentationLevel: indentationLevel + 1, parentId: comment.id)
-                    }
-                }
-                // insert comments into ordered comments array
-                if indentationLevel == 0 {
-                    self.orderedComments.append(contentsOf: commentsToInsert)
-                } else if indentationLevel > 0, let parentId = parentId {
-                    // get an index using the proper value for the parent comment data, insert the comment there
-                    if let index = self.orderedComments.firstIndex(of: [parentId: indentationLevel - 1]) {
-                        print(index)
-                        self.orderedComments.insert(contentsOf: commentsToInsert, at: index + 1)
+                        self.loadComments(for: kids)
                     }
                 }
             }
-            // FIXME: need to use a dispatch group to reload once ALL data has loaded
-            self.tableView.reloadData()
+            
+            self.dispatchGroup.leave()
+        }
+    }
+    
+    func structureCommentsForTableView() {
+        print("Comments", commentsById.count)
+        print("Descendants", story?.descendants ?? 0)
+        // starting with story.kids
+        if let kids = story?.kids {
+            addComments(from: kids, indent: 1) { [unowned self] in
+                print(self.orderedComments)
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func addComments(from ids: [Int], indent: Int, completionHandler: (() -> Void)?) {
+        for id in ids {
+            orderedComments.append([id : indent])
+            let comment = commentsById[id]
+            if let granKids = comment?.kids, granKids.count > 0 {
+                addComments(from: granKids, indent: indent + 1, completionHandler: nil)
+            }
+        }
+        if let handler = completionHandler {
+            handler()
         }
     }
     
