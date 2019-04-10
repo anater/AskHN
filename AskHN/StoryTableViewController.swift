@@ -31,7 +31,9 @@ class StoryTableViewController: UITableViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = false
-        tableView.estimatedRowHeight = 50
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareStory))
+        
+        tableView.estimatedRowHeight = 500
         
         if let items = story?.kids {
             loadComments(for: items)
@@ -47,9 +49,23 @@ class StoryTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
     }
     
+    func sendLinkToActivityVC(for id: Int) {
+        if let url = URL(string: "https://news.ycombinator.com/item?id=\(id)") {
+            let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            present(ac, animated: true)
+        }
+    }
+    
+    @objc func shareStory() {
+        if let id = story?.id {
+            sendLinkToActivityVC(for: id)
+        } else {
+            let ac = UIAlertController(title: "No story ID", message: "Unable to share this story.", preferredStyle: .alert)
+            present(ac, animated: true)
+        }
+    }
     
     func loadComments(for items: [Int]) {
-        print("Loading items", items)
         dispatchGroup.enter()
         // request items, then process data
         api.getItems(for: items) { [unowned self] (comments, error) in
@@ -78,8 +94,6 @@ class StoryTableViewController: UITableViewController {
     }
     
     func structureCommentsForTableView() {
-        print("Comments", commentsById.count)
-        print("Descendants", story?.descendants ?? 0)
         // starting with story.kids
         if let kids = story?.kids {
             addComments(from: kids, indent: 1) { [unowned self] in
@@ -117,12 +131,14 @@ class StoryTableViewController: UITableViewController {
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "storyComment") as? StoryCommentTableViewCell {
             let data = orderedComments[indexPath.row - 1]
             let comment = commentsById[data.first!.key]
-            
-            var text = comment?.text ?? ""
-            
+            let text = comment?.text ?? ""
+            // update cell content
             cell.textView?.attributedText = getAttributedString(from: Data(text.utf8))
             cell.subtitleLabel?.text = comment?.by
+            // update cell indent
             cell.indentationLevel = data.first!.value
+            let separatorIndent = CGFloat(cell.indentationLevel) * cell.indentationWidth
+            cell.separatorInset = UIEdgeInsets(top: 0, left: separatorIndent, bottom: 0, right: 0)
 
             return cell
         }
