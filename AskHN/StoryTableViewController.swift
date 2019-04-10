@@ -97,7 +97,6 @@ class StoryTableViewController: UITableViewController {
         // starting with story.kids
         if let kids = story?.kids {
             addComments(from: kids, indent: 1) { [unowned self] in
-                print(self.orderedComments)
                 self.tableView.reloadData()
             }
         }
