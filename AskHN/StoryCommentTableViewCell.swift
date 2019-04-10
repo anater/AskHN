@@ -19,6 +19,8 @@ class StoryCommentTableViewCell: UITableViewCell {
         textView.textContainerInset = UIEdgeInsets.zero
         textView.textContainer.lineFragmentPadding = 0
         indentationWidth = 20.0
+        // style links
+        textView.linkTextAttributes = [.foregroundColor: UIColor(red: 1.0, green: 0.4, blue: 0.0, alpha: 0.85)]
     }
     
     override func layoutSubviews() {
