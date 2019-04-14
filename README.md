@@ -2,7 +2,7 @@
 ### An iOS app for browsing Ask Hacker News
 
 I built Ask HN to practice Swift iOS development. 
-I really enjoy the discussions in questions [Hacker News](https://news.ycombinator.com/ask) so I wanted a quick and easy way to browse them. Most HN clients focus on the links, so I wanted to focus on the discussions. If you like the idea and want to learn more about Swift, please contribute!
+I really enjoy the discussions on [Hacker News](https://news.ycombinator.com/ask) so I wanted a quick and easy way to browse them. Most HN clients focus on the links, so I wanted to focus on the discussions for a change. If you like the idea and want to learn more about Swift, please contribute!
 
 ## Testing
 I will have it on TestFlight (link to come) and if things start shaping up, I'll submit it for review. In the meantime, clone the repo and run it in the simulator or on your device through Xcode.
