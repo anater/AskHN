@@ -137,6 +137,10 @@ class StoryTableViewController: UITableViewController {
             // update cell content
             cell.textView?.attributedText = getAttributedString(from: Data(text.utf8))
             cell.subtitleLabel?.text = comment?.by
+            // highlight OP in comments
+            if comment?.by == story?.by {
+                cell.subtitleLabel.textColor = UIColor(red: 0, green: 0.6, blue: 1, alpha: 1)
+            }
             // update cell indent
             cell.indentationLevel = data.first!.value
             let separatorIndent = CGFloat(cell.indentationLevel) * cell.indentationWidth
