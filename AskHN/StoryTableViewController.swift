@@ -104,10 +104,13 @@ class StoryTableViewController: UITableViewController {
     
     func addComments(from ids: [Int], indent: Int, completionHandler: (() -> Void)?) {
         for id in ids {
-            orderedComments.append([id : indent])
             let comment = commentsById[id]
-            if let granKids = comment?.kids, granKids.count > 0 {
-                addComments(from: granKids, indent: indent + 1, completionHandler: nil)
+            // guard against empty comments
+            if (comment?.text != nil && comment?.by != nil) {
+                orderedComments.append([id : indent])
+                if let granKids = comment?.kids, granKids.count > 0 {
+                    addComments(from: granKids, indent: indent + 1, completionHandler: nil)
+                }
             }
         }
         if let handler = completionHandler {
