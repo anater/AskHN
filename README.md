@@ -13,5 +13,6 @@ If you find an issue or think something could be better, open an issue. If you'r
 ## Principles
 Minimal
 - This project is for learning and that means minimizing features and dependencies. Since this is a simple client for displaying and sharing text, this shouldn't be a big deal. In addition, it reduces the learning curve and overhead to getting started with the project.
+
 Read only
-– The point of this app is to strictly be a client for consuming content from HN. We are not going to reverse-engineer authenticated actions (upvoting, commenting, saving, etc.). To keep things focused, this app will be read-only. We'll leverage the iOS ecosystem for sharing to enable saving and manipulating data with other apps.
+- The point of this app is to strictly be a client for consuming content from HN. We are not going to reverse-engineer authenticated actions (upvoting, commenting, saving, etc.). To keep things focused, this app will be read-only. We'll leverage the iOS ecosystem for sharing to enable saving and manipulating data with other apps.
